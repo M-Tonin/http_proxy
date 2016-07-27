@@ -1,7 +1,4 @@
 /****************************************
- * 489 PA2
- * Harrison Chandler (hchandl)
- * Li Huang (lisepher)
  *
  * proxy.c
  * usage: ./proxy <port>
@@ -299,7 +296,7 @@ void *proxy_thread(void * arg)
     
     int connect_skt_fd = *((int *) arg);
     
-    memset(buffer, 0, sizeof(buffer));
+    memset(buffer, 0, sizeof(char) * BUFFER_SIZE);
     
     rqst_length = read(connect_skt_fd, buffer, BUFFER_SIZE);
     if(rqst_length < 0)
@@ -386,7 +383,7 @@ void *proxy_thread(void * arg)
         pthread_exit(NULL);
     }
     
-    memset(buffer, 0, sizeof(buffer));
+    memset(buffer, 0, sizeof(char) * BUFFER_SIZE);
     int isReading = read(client_skt_fd, buffer, BUFFER_SIZE);
     while (isReading > 0)
     {
@@ -403,7 +400,7 @@ void *proxy_thread(void * arg)
             
             pthread_exit(NULL);
         }
-        memset(buffer, 0, sizeof(buffer));
+        memset(buffer, 0, sizeof(char) * BUFFER_SIZE);
         isReading = read(client_skt_fd, buffer, BUFFER_SIZE);
     }
     if (isReading < 0)
